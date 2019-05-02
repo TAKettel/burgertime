@@ -6,13 +6,17 @@ let burger = {
             cb(res);
         });
     },
-    create: function(vals, cb) {
-        orm.insertOne(vals, function(res) {
+    create: function(cols, vals, cb) {
+        orm.insertOne(cols, vals, function(res) {
+            console.log("This is the error: " + cb);
             cb(res);
         });
     },
-    update: function() {},
-    // ????
+    update: function(objColVals, condition, cb) {
+        orm.update(objColVals, condition, function(res) {
+          cb(res);
+        });
+    },
     delete: function(name, cb) {
         orm.delete(name, function(res) {
             cb(res);

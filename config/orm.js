@@ -10,9 +10,9 @@ var orm = {
           cb(result);
         });
     },
-    insertOne: function(vals, cb) {
+    insertOne: function(cols, vals, cb) {
         let queryString = "INSERT INTO burgers (burger_name, devoured) VALUES  (" + vals + ") ";
-        connection.query(queryString, vals, function(err, result) {
+        connection.query(queryString, cols, vals, function(err, result) {
             if (err) {
               throw err;
             }
@@ -20,11 +20,19 @@ var orm = {
             cb(result);
           });      
     },
-    updateOne: function() {
-        let queryString = "UPDATE burgers SET "
-        // ????
+    update: function(objColVals, condition, cb) {
+      var queryString = "UPDATE burgers SET " + objToSql(objColVals) +  " WHERE " + condition;
+  
+      console.log(queryString);
+      connection.query(queryString, function(err, result) {
+        if (err) {
+          throw err;
+        }
+  
+        cb(result);
+      });
     },
-    delete: function(name, cb) {
+      delete: function(name, cb) {
     var queryString = "DELETE FROM burgers WHERE " + name;
 
     connection.query(queryString, function(err, result) {
